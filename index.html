@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SkillSwap - Community Trades</title>
-    <link rel="manifest" href="manifest.json">
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
     
     <style>
+        /*STYLES*/
         * { box-sizing: border-box; }
         html, body {
             height: 100vh;
@@ -30,11 +30,7 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         
-        .logo { 
-            font-family: 'Pacifico', cursive; 
-            font-size: 28px; 
-            letter-spacing: 1px; 
-        }
+        .logo { font-family: 'Pacifico', cursive; font-size: 28px; letter-spacing: 1px; }
 
         .search-container { flex: 1; display: flex; justify-content: center; }
         .search-container input {
@@ -56,6 +52,8 @@
             cursor: pointer;
             font-weight: bold;
         }
+
+        /*LAYOUT*/
         .app-container {
             display: flex;
             flex: 1;
@@ -81,7 +79,6 @@
         .sidebar ul { list-style: none; padding: 0; margin-top: 20px; }
         .sidebar li { padding: 15px; border-radius: 8px; cursor: pointer; transition: background 0.2s; }
         .sidebar li:hover { background: #f0f9ff; color: #0077b6; }
-        .close-btn { float: right; cursor: pointer; font-size: 1.2rem; font-weight: bold; color: #999; }
         
         .community-tab {
             width: 100%;
@@ -102,121 +99,47 @@
             background: #fff;
             border-bottom: 1px solid #e0e0e0;
         }
-        .icon-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #555; padding: 5px 10px; border-radius: 5px; }
         .scroll-content { flex: 1; overflow-y: auto; padding: 20px; }
-        
-        .sticky-footer {
-            background: #fff;
-            padding: 10px 20px;
-            text-align: center;
-            border-top: 1px solid #e0e0e0;
-            font-size: 0.8rem;
-            color: #666;
-            z-index: 10;
-            font-weight: 400;
-        }
 
+        /*CARDS*/
         .trade-card {
             background: white;
             border-radius: 12px;
-            overflow: hidden; 
             margin-bottom: 30px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.08);
             border: 1px solid #eee;
-            position: relative;
         }
-        .card-header {
-            display: flex; 
-            align-items: center; 
-            padding: 12px; gap: 10px; 
-            border-bottom: 1px solid #eee;
-         }
-
-        .avatar { width: 35px; 
-            height: 35px; 
-            border-radius: 50%; 
-            background: #eee; 
-            object-fit: cover; 
-        }
-        .user-meta { 
-            display: flex; 
-            flex-direction: column; 
-        }
-
-        .username { 
-            font-weight: 700; 
-            font-size: 0.9rem; 
-            color: #333; 
-        }
-
-        .post-time { 
-            font-size: 0.7rem; 
-            color: #888; 
-        }
-
-        .card-image { 
-            width: 100%; 
-            height: 250px; object-fit: cover; 
-            background-color: #ddd; 
-        }
-
+        .card-header { display: flex; align-items: center; padding: 12px; gap: 10px; border-bottom: 1px solid #eee; }
+        .avatar { width: 35px; height: 35px; border-radius: 50%; background: #eee; }
+        .card-image { width: 100%; height: 250px; object-fit: cover; }
         .card-body { padding: 20px; }
-        .trade-card h4 { margin: 0 0 8px 0; color: #0077b6; font-size: 1.2rem; font-weight: 700; }
-        .trade-card p { margin: 0 0 15px 0; color: #555; line-height: 1.4; }
+        
         .btn-group { display: flex; gap: 10px; }
-        .action-btn { font-family: 'Inter', sans-serif; padding: 8px 12px; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; font-size: 0.85rem; flex: 1; text-align: center; }
+        .action-btn { font-family: 'Inter', sans-serif; padding: 8px 12px; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; flex: 1; transition: 0.2s; }
+        
         .msg-btn { background-color: #00b4d8; color: white; }
         .quiz-btn { background-color: #fbbf24; color: #451a03; } 
-        
-        .bookmark-btn {
-            position: absolute;
-            top: 60px;
-            right: 10px;
-            background: rgba(255,255,255,0.8);
-            border: none;
-            border-radius: 50%;
-            width: 35px;
-            height: 35px;
-            cursor: pointer;
-            font-size: 1.2rem;
-            color: #ccc;
-            transition: color 0.2s;
-            z-index: 10;
-        }
+        .bookmark-button { background-color: orangered; color: white; }
+        .bookmark-button.active { background-color: orange; color: #451a03; }
 
-        .bookmark-btn.active { color: #fbbf24; }
-        .comment-section { background: #fafafa; padding: 15px; border-top: 1px solid #eee; }
-        .comment { font-size: 0.85rem; margin-bottom: 8px; color: #444; border-bottom: 1px solid #f0f0f0; padding-bottom: 4px; }
-        
-        .comment-input { 
-            font-family: 'Inter', sans-serif;
-            width: 100%; padding: 8px 15px; border-radius: 20px; border: 1px solid #ddd; 
-            outline: none; font-size: 0.85rem; margin-top: 10px;
-        }
+       
         .overlay {
             display: none; position: absolute; top: 0; left: 0;
             width: 100%; height: 100%; background: rgba(0,0,0,0.4);
-            z-index: 1400; transition: opacity 0.3s;
+            z-index: 1400; 
         }
         .overlay.active { display: flex; justify-content: center; align-items: center; }
         .auth-modal {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 380px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            position: relative;
+            background: white; padding: 30px; border-radius: 15px;
+            width: 90%; max-width: 380px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         }
-        .auth-modal input {
-            font-family: 'Inter', sans-serif;
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-        }
-        .error-text { color: #ef4444; font-size: 0.85rem; display: none; margin-bottom: 10px; }
+        .auth-modal input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; }
+        .toggle-auth { font-size: 0.85rem; color: #0077b6; cursor: pointer; text-decoration: underline; display: block; margin-top: 15px; text-align: center; }
+        
+        .close-btn { float: right; cursor: pointer; font-size: 1.2rem; color: #999; }
+        .error-text { color: #ef4444; font-size: 0.85rem; display: none; }
+        
+        .back-btn { background: #eee; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 0.8rem; margin-bottom: 10px; display: none; }
     </style>
 </head>
 <body>
@@ -230,17 +153,22 @@
 </header>
 
 <div class="app-container">
-    <div id="main-overlay" class="overlay" onclick="closeMenus()" style="z-index: 1400;"></div>
+    <div id="main-overlay" class="overlay" onclick="closeMenus()"></div>
 
     <div id="auth-overlay" class="overlay" style="z-index: 3000;">
         <div class="auth-modal">
             <span class="close-btn" onclick="closeAuth()">✕</span>
-            <h3 style="color: #0077b6; margin-top: 0;">Sign In</h3>
-            <p style="color: #666; font-size: 0.9rem;">Access your bookmarks and messages.</p>
-            <input type="text" id="userInput" placeholder="Username or Email (bob@mail.com)">
-            <input type="password" id="passInput" placeholder="Password (bobpass)">
+            <h3 id="authTitle" style="color: #0077b6; margin-top: 0;">Sign In</h3>
+            <p id="authDesc" style="color: #666; font-size: 0.9rem;">Access your bookmarks and messages.</p>
+            
+            <input type="text" id="userInput" placeholder="Username">
+            <input type="password" id="passInput" placeholder="Password">
+            
             <p id="authError" class="error-text">Invalid username or password.</p>
-            <button class="action-btn msg-btn" style="width: 100%; padding: 12px; margin-top: 10px;" onclick="attemptLogin()">Login</button>
+            
+            <button id="authSubmit" class="action-btn msg-btn" style="width: 100%; padding: 12px; margin-top: 10px;" onclick="handleAuth()">Login</button>
+            
+            <span class="toggle-auth" id="authToggle" onclick="toggleAuthMode()">Don't have an account? Sign Up</span>
         </div>
     </div>
 
@@ -248,9 +176,9 @@
         <span class="close-btn" onclick="closeMenus()">✕</span>
         <h3 id="menuTitle">Account Menu</h3>
         <ul>
-            <li>👤 Profile</li>
+            <li onclick="alert('Profile Coming Soon!')">👤 Profile</li>
             <li onclick="toggleMenu('right-messages')">✉️ Messages</li>
-            <li>⭐ Bookmarks (<span id="bookmarkCount">0</span>)</li>
+            <li onclick="viewBookmarks()">🌟 Bookmarks (<span id="bookmarkCount">0</span>)</li>
             <li>📖 About SkillSwap</li> 
             <li>⚙️ Settings</li>
             <li id="logoutLink" style="color:red; display: none;" onclick="processLogout()">🚪 Logout</li>
@@ -259,61 +187,73 @@
 
     <main class="community-tab">
         <div class="tab-header">
-            <button class="icon-btn" onclick="toggleMenu('left-menu')">☰</button>
-            <h2 style="font-size: 1.2rem; color: #333; font-weight: 700;">Community Feed</h2>
+            <button class="icon-btn" style="background:none; border:none; font-size:1.5rem; cursor:pointer;" onclick="toggleMenu('left-menu')">☰</button>
+            <h2 id="feedTitle" style="font-size: 1.2rem; color: #333; font-weight: 700;">Community Feed</h2>
+            <div style="width: 30px;"></div>
         </div>
-        <div class="scroll-content" id="feed-container"></div>
-        
-        <footer class="sticky-footer">
-            <span>&copy; 2026 SkillSwap Community | VIDB</span>
-        </footer>
+        <div class="scroll-content">
+            <button id="backToFeed" class="back-btn" onclick="renderFeed()">← Back to Feed</button>
+            <div id="feed-container"></div>
+        </div>
     </main>
 
     <aside id="right-messages" class="sidebar right">
         <span class="close-btn" onclick="closeMenus()">✕</span>
         <h3>Direct Messages</h3>
         <div id="msgContent" style="color: #999; text-align: center; margin-top: 50px;">
-            <p>Please login to view your messages and active swaps.</p>
+            <p>Please login to view your messages.</p>
         </div>
     </aside>
 </div>
 
 <script>
     let currentUser = null;
+    let isLoginMode = true;
     let bookmarks = new Set();
 
     const trades = [
-        { 
-            id: 1, 
-            user: "Sarah_Designs", 
-            avatar: "https://i.pravatar.cc/150?u=sarah",
-            time: "2 hours ago",
-            title: "Graphic Design for Web Dev", 
-            desc: "I can design professional logos and UI assets in exchange for React troubleshooting.", 
-            img: "https://images.unsplash.com/photo-1587440871875-191322ee64b0?w=600",
-            comments: ["This would be great for my portfolio!", "I sent you a DM!"]
-        },
-        { 
-            id: 2, 
-            user: "Chef_Mario", 
-            avatar: "https://i.pravatar.cc/150?u=mario",
-            time: "5 hours ago",
-            title: "Authentic Italian Cooking", 
-            desc: "Willing to teach pasta making from scratch. Looking for digital photography basics.", 
-            img: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=600",
-            comments: ["Does this include sauce making?"]
-        },
-        { 
-            id: 3, 
-            user: "Yoga_Jenny", 
-            avatar: "https://i.pravatar.cc/150?u=jenny",
-            time: "1 day ago",
-            title: "Yoga for Guitar Lessons", 
-            desc: "Certified instructor offering private yoga sessions. I want to learn acoustic guitar.", 
-            img: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600",
-            comments: []
-        }
+        { id: 1, user: "Sarah_Designs", avatar: "https://i.pravatar.cc/150?u=sarah", time: "2h ago", title: "Graphic Design for Web Dev", desc: "Professional logos for React help.", img: "https://images.unsplash.com/photo-1587440871875-191322ee64b0?w=600", comments: [] },
+        { id: 2, user: "Chef_Marie", avatar: "https://i.pravatar.cc/150?u=mario", time: "5h ago", title: "Authentic Italian Cooking", desc: "Learn pasta making! Seeking photography tips.", img: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=600", comments: [] },
+        { id: 3, user: "Yoga_Jenny", avatar: "https://i.pravatar.cc/150?u=jenny", time: "1d ago", title: "Yoga for Guitar Lessons", desc: "Private yoga sessions. I want to learn acoustic guitar.", img: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600", comments: [] }
     ];
+
+    function toggleAuthMode() {
+        isLoginMode = !isLoginMode;
+        const title = document.getElementById('authTitle');
+        const desc = document.getElementById('authDesc');
+        const btn = document.getElementById('authSubmit');
+        const toggle = document.getElementById('authToggle');
+
+        if (isLoginMode) {
+            title.innerText = "Sign In";
+            desc.innerText = "Access your bookmarks and messages.";
+            btn.innerText = "Login";
+            toggle.innerText = "Don't have an account? Sign Up";
+        } else {
+            title.innerText = "Create Account";
+            desc.innerText = "Join the SkillSwap community today!";
+            btn.innerText = "Register";
+            toggle.innerText = "Already have an account? Login";
+        }
+    }
+
+    function handleAuth() {
+        const u = document.getElementById('userInput').value;
+        if (!u) { alert("Please enter a username"); return; }
+        
+        
+        currentUser = { name: u };
+        document.getElementById('headerAuthBtn').innerText = `Hi, ${u}`;
+        document.getElementById('menuTitle').innerText = `Welcome, ${u}!`;
+        document.getElementById('logoutLink').style.display = "block";
+        document.getElementById('msgContent').innerHTML = "<p>Select a contact to start swapping!</p>";
+        
+        closeAuth();
+        renderFeed();
+    }
+
+    function openAuth() { document.getElementById('auth-overlay').classList.add('active'); }
+    function closeAuth() { document.getElementById('auth-overlay').classList.remove('active'); }
 
     function toggleMenu(id) {
         closeMenus();
@@ -326,96 +266,71 @@
         document.getElementById('main-overlay').classList.remove('active');
     }
 
-    function openAuth() {
-        if(currentUser) return;
-        document.getElementById('auth-overlay').classList.add('active');
-    }
-
-    function closeAuth() {
-        document.getElementById('auth-overlay').classList.remove('active');
-        document.getElementById('authError').style.display = 'none';
-    }
-
-    function attemptLogin() {
-        const u = document.getElementById('userInput').value;
-        const p = document.getElementById('passInput').value;
-        if ((u === 'bob' || u === 'bob@mail.com') && p === 'bobpass') {
-            currentUser = { name: 'Bob', email: 'bob@mail.com' };
-            updateUIAfterLogin();
-            closeAuth();
-        } else {
-            document.getElementById('authError').style.display = 'block';
+    function viewBookmarks() {
+        if (!currentUser) { openAuth(); return; }
+        closeMenus();
+        if (bookmarks.size === 0) {
+            alert("You haven't bookmarked anything yet!");
+            return;
         }
+        renderFeed(true);
     }
 
-    function updateUIAfterLogin() {
-        document.getElementById('headerAuthBtn').innerText = "Hi, Bob";
-        document.getElementById('menuTitle').innerText = "Welcome, Bob!";
-        document.getElementById('logoutLink').style.display = "block";
-        document.getElementById('msgContent').innerHTML = "<p style='color:#333'>Select a contact to start swapping!</p>";
+    function toggleBookmark(id) {
+        if (!currentUser) { openAuth(); return; }
+        bookmarks.has(id) ? bookmarks.delete(id) : bookmarks.add(id);
+        document.getElementById('bookmarkCount').innerText = bookmarks.size;
         renderFeed();
+    }
+
+  
+    function renderFeed(showOnlyBookmarks = false) {
+        const container = document.getElementById('feed-container');
+        const title = document.getElementById('feedTitle');
+        const backBtn = document.getElementById('backToFeed');
+        
+        const listToRender = showOnlyBookmarks 
+            ? trades.filter(t => bookmarks.has(t.id)) 
+            : trades;
+
+        title.innerText = showOnlyBookmarks ? "Your Bookmarks" : "Community Feed";
+        backBtn.style.display = showOnlyBookmarks ? "block" : "none";
+
+        container.innerHTML = listToRender.map(t => {
+            const isBookmarked = bookmarks.has(t.id);
+            return `
+                <div class="trade-card">
+                    <div class="card-header">
+                        <img src="${t.avatar}" class="avatar">
+                        <div class="user-meta">
+                            <span class="username">${t.user}</span> <span style="font-size:0.7rem; color:#888;">• ${t.time}</span>
+                        </div>
+                    </div>
+                    <img src="${t.img}" class="card-image">
+                    <div class="card-body">
+                        <h4 style="margin:0 0 10px 0; color:#0077b6;">${t.title}</h4>
+                        <p style="font-size:0.9rem; color:#555;">${t.desc}</p>
+                        <div class="btn-group">
+                            <button class="action-btn msg-btn">Accept Trade</button>
+                            <button class="action-btn quiz-btn">🎓 Study</button>
+                            <button class="action-btn bookmark-button ${isBookmarked ? 'active' : ''}" onclick="toggleBookmark(${t.id})">
+                                ${isBookmarked ? '🌟 Bookmarked' : '⭐ Bookmark'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
     }
 
     function processLogout() {
         currentUser = null;
         bookmarks.clear();
         document.getElementById('headerAuthBtn').innerText = "Login / Sign Up";
-        document.getElementById('menuTitle').innerText = "Account Menu";
         document.getElementById('logoutLink').style.display = "none";
         document.getElementById('bookmarkCount').innerText = "0";
-        document.getElementById('msgContent').innerHTML = "<p>Please login to view your messages.</p>";
         renderFeed();
         closeMenus();
-    }
-
-    function toggleBookmark(id) {
-        if (!currentUser) { openAuth(); return; }
-        if (bookmarks.has(id)) { bookmarks.delete(id); } 
-        else { bookmarks.add(id); }
-        document.getElementById('bookmarkCount').innerText = bookmarks.size;
-        renderFeed();
-    }
-
-    function handleNewComment(tradeId, inputElement) {
-        const text = inputElement.value.trim();
-        if (text === "") return;
-        const trade = trades.find(item => item.id === tradeId);
-        trade.comments.push(text);
-        renderFeed();
-    }
-
-    function renderFeed() {
-        const container = document.getElementById('feed-container');
-        container.innerHTML = trades.map(t => `
-            <div class="trade-card">
-                <div class="card-header">
-                    <img src="${t.avatar}" class="avatar">
-                    <div class="user-meta">
-                        <span class="username">${t.user}</span>
-                        <span class="post-time">${t.time}</span>
-                    </div>
-                </div>
-                <button class="bookmark-btn ${bookmarks.has(t.id) ? 'active' : ''}" onclick="toggleBookmark(${t.id})">★</button>
-                <img src="${t.img}" class="card-image" alt="${t.title}">
-                <div class="card-body">
-                    <h4>${t.title}</h4>
-                    <p>${t.desc}</p>
-                    <div class="btn-group">
-                        <button class="action-btn msg-btn" onclick="${currentUser ? "alert('Messaging...')" : "openAuth()"}">Message</button>
-                        <button class="action-btn quiz-btn">🎓 Study Sets</button>
-                    </div>
-                </div>
-                ${currentUser ? `
-                    <div class="comment-section">
-                        <div>
-                            ${t.comments.map(c => `<div class="comment"><strong>User:</strong> ${c}</div>`).join('')}
-                        </div>
-                        <input type="text" class="comment-input" placeholder="Leave a comment..." 
-                            onkeypress="if(event.key === 'Enter') handleNewComment(${t.id}, this)">
-                    </div>
-                ` : ''}
-            </div>
-        `).join('');
     }
 
     renderFeed();
