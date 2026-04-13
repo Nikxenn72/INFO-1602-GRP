@@ -4,74 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SkillSwap - Community Trades</title>
-    
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0077b6">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
-    
     <style>
-        /* --- STYLES --- */
         * { box-sizing: border-box; }
-        html, body {
-            height: 100vh;
-            margin: 0;
-            font-family: 'Inter', sans-serif;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden; 
-            background-color: #f4f7f6;
-        }
-        .header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: linear-gradient(#0077b6, #0096c7, #00b4d8);
-            padding: 0.8rem 1.5rem;
-            color: white;
-            z-index: 2000; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
+        html, body { height: 100vh; margin: 0; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; overflow: hidden; background-color: #f4f7f6; }
+        .header { display: flex; align-items: center; justify-content: space-between; background: linear-gradient(#0077b6, #0096c7, #00b4d8); padding: 0.8rem 1.5rem; color: white; z-index: 2000; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .logo { font-family: 'Pacifico', cursive; font-size: 28px; letter-spacing: 1px; }
-
         .search-container { flex: 1; display: flex; justify-content: center; }
-        .search-container input {
-            font-family: 'Inter', sans-serif;
-            padding: 8px 15px;
-            border-radius: 20px;
-            border: none;
-            outline: none;
-            width: 100%;
-            max-width: 400px;
-        }
-        .auth-btn {
-            font-family: 'Inter', sans-serif;
-            padding: 8px 18px;
-            border: none;
-            border-radius: 15px;
-            background: white;
-            color: #0077b6;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        /* --- LAYOUT --- */
-        .app-container {
-            display: flex;
-            flex: 1;
-            position: relative;
-            overflow: hidden;
-            justify-content: center;
-        }
-        .sidebar {
-            position: absolute;
-            top: 0;
-            width: 280px;
-            height: 100%;
-            background: white;
-            z-index: 1500;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 0 15px rgba(0,0,0,0.15);
-            padding: 20px;
-        }
+        .search-container input { font-family: 'Inter', sans-serif; padding: 8px 15px; border-radius: 20px; border: none; outline: none; width: 100%; max-width: 400px; }
+        .auth-btn { font-family: 'Inter', sans-serif; padding: 8px 18px; border: none; border-radius: 15px; background: white; color: #0077b6; cursor: pointer; font-weight: bold; }
+        .app-container { display: flex; flex: 1; position: relative; overflow: hidden; justify-content: center; }
+        .sidebar { position: absolute; top: 0; width: 280px; height: 100%; background: white; z-index: 1500; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 15px rgba(0,0,0,0.15); padding: 20px; }
         .sidebar.left { left: 0; transform: translateX(-100%); }
         .sidebar.right { right: 0; transform: translateX(100%); }
         .sidebar.active { transform: translateX(0); }
@@ -79,77 +24,77 @@
         .sidebar ul { list-style: none; padding: 0; margin-top: 20px; }
         .sidebar li { padding: 15px; border-radius: 8px; cursor: pointer; transition: background 0.2s; }
         .sidebar li:hover { background: #f0f9ff; color: #0077b6; }
-        
-        .community-tab {
-            width: 100%;
-            max-width: 700px; 
-            display: flex;
-            flex-direction: column;
-            background-color: #f4f7f6;
-            z-index: 1;
-            border-left: 1px solid #e0e0e0;
-            border-right: 1px solid #e0e0e0;
-            position: relative;
-        }
-        .tab-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-            background: #fff;
-            border-bottom: 1px solid #e0e0e0;
-        }
+        .community-tab { width: 100%; max-width: 700px; display: flex; flex-direction: column; background-color: #f4f7f6; z-index: 1; border-left: 1px solid #e0e0e0; border-right: 1px solid #e0e0e0; position: relative; }
+        .tab-header { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background: #fff; border-bottom: 1px solid #e0e0e0; }
         .scroll-content { flex: 1; overflow-y: auto; padding: 20px; }
-
-        /* --- FOOTER FIX --- */
-        .sticky-footer {
-            background: #fff;
-            padding: 15px;
-            text-align: center;
-            border-top: 1px solid #e0e0e0;
-            font-size: 0.85rem;
-            color: #666;
-            font-weight: 400;
-        }
-
-        /* --- CARDS --- */
-        .trade-card {
-            background: white;
-            border-radius: 12px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            border: 1px solid #eee;
-        }
+        .sticky-footer { background: #fff; padding: 15px; text-align: center; border-top: 1px solid #e0e0e0; font-size: 0.85rem; color: #666; font-weight: 400; }
+        .trade-card { background: white; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: 1px solid #eee; }
         .card-header { display: flex; align-items: center; padding: 12px; gap: 10px; border-bottom: 1px solid #eee; }
-        .avatar { width: 35px; height: 35px; border-radius: 50%; background: #eee; }
+        .avatar { width: 35px; height: 35px; border-radius: 50%; background: #eee; object-fit: cover; }
         .card-image { width: 100%; height: 250px; object-fit: cover; }
         .card-body { padding: 20px; }
-        
         .btn-group { display: flex; gap: 10px; }
         .action-btn { font-family: 'Inter', sans-serif; padding: 8px 12px; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; flex: 1; transition: 0.2s; }
-        
         .msg-btn { background-color: #00b4d8; color: white; }
-        .quiz-btn { background-color: #fbbf24; color: #451a03; } 
+        .quiz-btn { background-color: #fbbf24; color: #451a03; }
         .bookmark-button { background-color: orangered; color: white; }
         .bookmark-button.active { background-color: orange; color: #451a03; }
-
-        .overlay {
-            display: none; position: absolute; top: 0; left: 0;
-            width: 100%; height: 100%; background: rgba(0,0,0,0.4);
-            z-index: 1400; 
-        }
+        .engage-row { display: flex; align-items: center; gap: 15px; padding: 0 20px 12px; font-size: 0.85rem; color: #666; }
+        .like-btn { background: none; border: none; cursor: pointer; font-size: 0.9rem; color: #666; padding: 4px 8px; border-radius: 6px; transition: background 0.15s; font-family: 'Inter', sans-serif; }
+        .like-btn:hover { background: #fef3c7; }
+        .like-btn.liked { color: #e11d48; }
+        .comment-toggle-btn { background: none; border: none; cursor: pointer; font-size: 0.85rem; color: #888; font-family: 'Inter', sans-serif; padding: 4px 0; }
+        .comment-section { padding: 0 20px 15px; border-top: 1px solid #f0f0f0; margin-top: 4px; }
+        .comment-section.hidden { display: none; }
+        .comment-list { margin-bottom: 10px; }
+        .comment-item { font-size: 0.82rem; color: #444; padding: 6px 0; border-bottom: 1px solid #f5f5f5; }
+        .comment-item strong { color: #0077b6; }
+        .comment-input-row { display: flex; gap: 8px; }
+        .comment-input-row input { flex: 1; padding: 7px 12px; border: 1px solid #ddd; border-radius: 20px; font-size: 0.82rem; font-family: 'Inter', sans-serif; outline: none; }
+        .comment-input-row button { padding: 7px 14px; background: #0096c7; color: white; border: none; border-radius: 20px; cursor: pointer; font-size: 0.82rem; font-family: 'Inter', sans-serif; font-weight: 600; }
+        .advice-card { background: linear-gradient(135deg, #0077b6, #00b4d8); border-radius: 12px; margin-bottom: 30px; padding: 24px; color: white; box-shadow: 0 4px 12px rgba(0,0,0,0.12); }
+        .advice-card h4 { margin: 0 0 10px; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; opacity: 0.8; }
+        .advice-card p { margin: 0; font-size: 1rem; line-height: 1.5; font-style: italic; }
+        .advice-card button { margin-top: 14px; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); color: white; padding: 6px 14px; border-radius: 20px; cursor: pointer; font-size: 0.8rem; font-family: 'Inter', sans-serif; }
+        .skeleton-card { background: white; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: 1px solid #eee; overflow: hidden; }
+        .skel { background: #e0e0e0; border-radius: 4px; animation: shimmer 1.2s infinite; }
+        .skel-header { height: 55px; display: flex; align-items: center; gap: 10px; padding: 12px; border-bottom: 1px solid #eee; }
+        .skel-avatar { width: 35px; height: 35px; border-radius: 50%; flex-shrink: 0; background: #e0e0e0; animation: shimmer 1.2s infinite; }
+        .skel-line { height: 12px; border-radius: 4px; background: #e0e0e0; animation: shimmer 1.2s infinite; }
+        .skel-image { width: 100%; height: 220px; background: #e0e0e0; animation: shimmer 1.2s infinite; }
+        .skel-body { padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+        @keyframes shimmer { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+        .overlay { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 1400; }
         .overlay.active { display: flex; justify-content: center; align-items: center; }
-        .auth-modal {
-            background: white; padding: 30px; border-radius: 15px;
-            width: 90%; max-width: 380px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
-        .auth-modal input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; }
+        .auth-modal { background: white; padding: 30px; border-radius: 15px; width: 90%; max-width: 380px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        .auth-modal input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; font-family: 'Inter', sans-serif; }
         .toggle-auth { font-size: 0.85rem; color: #0077b6; cursor: pointer; text-decoration: underline; display: block; margin-top: 15px; text-align: center; }
-        
         .close-btn { float: right; cursor: pointer; font-size: 1.2rem; color: #999; }
         .error-text { color: #ef4444; font-size: 0.85rem; display: none; }
-        
         .back-btn { background: #eee; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 0.8rem; margin-bottom: 10px; display: none; }
+        .quiz-modal { background: white; padding: 30px; border-radius: 15px; width: 90%; max-width: 480px; box-shadow: 0 10px 25px rgba(0,0,0,0.25); max-height: 90vh; overflow-y: auto; }
+        .quiz-modal h3 { color: #0077b6; margin-top: 0; }
+        .quiz-q { font-weight: 700; font-size: 1rem; margin-bottom: 14px; line-height: 1.4; }
+        .quiz-option { display: block; width: 100%; text-align: left; padding: 10px 14px; margin-bottom: 8px; border: 1px solid #ddd; border-radius: 8px; background: white; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 0.9rem; transition: background 0.15s; }
+        .quiz-option:hover { background: #f0f9ff; border-color: #00b4d8; }
+        .quiz-option.correct { background: #dcfce7; border-color: #16a34a; color: #166534; }
+        .quiz-option.wrong { background: #fee2e2; border-color: #dc2626; color: #991b1b; }
+        .quiz-score { font-size: 1.1rem; color: #0077b6; font-weight: 700; text-align: center; margin-top: 10px; }
+        .quiz-progress { font-size: 0.8rem; color: #888; margin-bottom: 12px; }
+        .next-btn { background: #00b4d8; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 600; margin-top: 12px; display: none; }
+        .msg-thread { border: 1px solid #eee; border-radius: 8px; padding: 12px; margin-bottom: 10px; cursor: pointer; transition: background 0.15s; }
+        .msg-thread:hover { background: #f0f9ff; }
+        .msg-thread strong { color: #0077b6; font-size: 0.9rem; }
+        .msg-thread p { margin: 4px 0 0; font-size: 0.8rem; color: #888; }
+        .msg-unread { width: 8px; height: 8px; background: #00b4d8; border-radius: 50%; float: right; margin-top: 4px; }
+        .login-gate { background: linear-gradient(135deg, #0077b6, #00b4d8); border-radius: 12px; padding: 30px 24px; text-align: center; margin-bottom: 30px; color: white; }
+        .login-gate h3 { margin: 0 0 8px; font-size: 1.1rem; }
+        .login-gate p { margin: 0 0 18px; font-size: 0.9rem; opacity: 0.9; }
+        .login-gate button { background: white; color: #0077b6; border: none; padding: 10px 28px; border-radius: 20px; font-family: 'Inter', sans-serif; font-weight: 700; cursor: pointer; font-size: 0.9rem; }
+        .members-divider { display: flex; align-items: center; gap: 10px; margin: 10px 0 24px; }
+        .members-divider div { flex: 1; height: 1px; background: #e0e0e0; }
+        .members-divider span { font-size: 0.75rem; font-weight: 700; color: #00b4d8; white-space: nowrap; }
+        .load-more-spinner { text-align: center; padding: 20px; color: #888; font-size: 0.9rem; display: none; }
     </style>
 </head>
 <body>
@@ -157,7 +102,7 @@
 <header class="header">
     <div class="logo">SkillSwap</div>
     <div class="search-container">
-        <input type="text" placeholder="Search Skills to Swap...">
+        <input type="text" id="searchInput" placeholder="Search Skills to Swap..." oninput="filterFeed(this.value)">
     </div>
     <div><button class="auth-btn" id="headerAuthBtn" onclick="openAuth()">Login / Sign Up</button></div>
 </header>
@@ -167,9 +112,9 @@
 
     <div id="auth-overlay" class="overlay" style="z-index: 3000;">
         <div class="auth-modal">
-            <span class="close-btn" onclick="closeAuth()">✕</span>
+            <span class="close-btn" onclick="closeAuth()">&#x2715;</span>
             <h3 id="authTitle" style="color: #0077b6; margin-top: 0;">Sign In</h3>
-            <p id="authDesc" style="color: #666; font-size: 0.9rem;">Access your bookmarks and messages.</p>
+            <p style="color: #666; font-size: 0.9rem;">Access your bookmarks, likes and messages.</p>
             <input type="text" id="userInput" placeholder="Username">
             <input type="password" id="passInput" placeholder="Password">
             <p id="authError" class="error-text">Invalid username or password.</p>
@@ -178,38 +123,43 @@
         </div>
     </div>
 
+    <div id="quiz-overlay" class="overlay" style="z-index: 3000;">
+        <div class="quiz-modal">
+            <span class="close-btn" onclick="closeQuiz()">&#x2715;</span>
+            <h3 id="quizTitle">&#x1F393; SkillSwap Study Quiz</h3>
+            <div id="quiz-body"></div>
+        </div>
+    </div>
+
     <aside id="left-menu" class="sidebar left">
-        <span class="close-btn" onclick="closeMenus()">✕</span>
+        <span class="close-btn" onclick="closeMenus()">&#x2715;</span>
         <h3 id="menuTitle">Account Menu</h3>
         <ul>
-            <li onclick="alert('Profile Coming Soon!')">👤 Profile</li>
-            <li onclick="toggleMenu('right-messages')">✉️ Messages</li>
-            <li onclick="viewBookmarks()">🌟 Bookmarks (<span id="bookmarkCount">0</span>)</li>
-            <li>📖 About SkillSwap</li> 
-            <li>⚙️ Settings</li>
-            <li id="logoutLink" style="color:red; display: none;" onclick="processLogout()">🚪 Logout</li>
+            <li onclick="alert('Profile Coming Soon!')">&#x1F464; Profile</li>
+            <li onclick="toggleMenu('right-messages')">&#x2709;&#xFE0F; Messages</li>
+            <li onclick="viewBookmarks()">&#x1F31F; Bookmarks (<span id="bookmarkCount">0</span>)</li>
+            <li>&#x1F4D6; About SkillSwap</li>
+            <li>&#x2699;&#xFE0F; Settings</li>
+            <li id="logoutLink" style="color:red; display: none;" onclick="processLogout()">&#x1F6AA; Logout</li>
         </ul>
     </aside>
 
     <main class="community-tab">
         <div class="tab-header">
-            <button class="icon-btn" style="background:none; border:none; font-size:1.5rem; cursor:pointer;" onclick="toggleMenu('left-menu')">☰</button>
+            <button style="background:none; border:none; font-size:1.5rem; cursor:pointer;" onclick="toggleMenu('left-menu')">&#9776;</button>
             <h2 id="feedTitle" style="font-size: 1.2rem; color: #333; font-weight: 700;">Community Feed</h2>
             <div style="width: 30px;"></div>
         </div>
-        
-        <div class="scroll-content">
-            <button id="backToFeed" class="back-btn" onclick="renderFeed()">← Back to Feed</button>
+        <div class="scroll-content" id="scrollArea">
+            <button id="backToFeed" class="back-btn" onclick="renderFeed()">&#8592; Back to Feed</button>
             <div id="feed-container"></div>
+            <div class="load-more-spinner" id="loadSpinner">Loading more trades...</div>
         </div>
-
-        <footer class="sticky-footer">
-            <span>&copy; 2026 SkillSwap Community • Group VIDB • Built with ❤️</span>
-        </footer>
+        <footer class="sticky-footer">&copy; 2026 SkillSwap Community &bull; Group VIDB &bull; Built with &#10084;&#65039;</footer>
     </main>
 
     <aside id="right-messages" class="sidebar right">
-        <span class="close-btn" onclick="closeMenus()">✕</span>
+        <span class="close-btn" onclick="closeMenus()">&#x2715;</span>
         <h3>Direct Messages</h3>
         <div id="msgContent" style="color: #999; text-align: center; margin-top: 50px;">
             <p>Please login to view your messages.</p>
@@ -221,96 +171,420 @@
     let currentUser = null;
     let isLoginMode = true;
     let bookmarks = new Set();
+    let likes = {};
+    let likedByMe = new Set();
+    let comments = {};
+    let allTrades = [];
+    let memberTrades = [];
+    let generatedTrades = [];
+    let isLoadingMore = false;
+    let autoLoadSeed = 100;
+    let lastQuizTradeId = null;
+    let quizQuestions = [], quizIndex = 0, quizScore = 0;
 
-    const trades = [
-        { id: 1, user: "Sarah_Designs", avatar: "https://i.pravatar.cc/150?u=sarah", time: "2h ago", title: "Graphic Design for Web Dev", desc: "Professional logos for React help.", img: "https://images.unsplash.com/photo-1587440871875-191322ee64b0?w=600" },
-        { id: 2, user: "Chef_Marie", avatar: "https://i.pravatar.cc/150?u=mario", time: "5h ago", title: "Authentic Italian Cooking", desc: "Learn pasta making! Seeking photography tips.", img: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=600" },
-        { id: 3, user: "Yoga_Jenny", avatar: "https://i.pravatar.cc/150?u=jenny", time: "1d ago", title: "Yoga for Guitar Lessons", desc: "Private yoga sessions. I want to learn acoustic guitar.", img: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600" }
+    const registeredUsers = { 'bob': 'bobpass' };
+
+    const publicTradeData = [
+        { id:1,  time:"2m ago",   title:"UI Design for React Help",                desc:"I make clean Figma mockups and need someone to turn them into code. React or Vue doesn't matter. Let's build something together!", img:"https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600", tags:["Design","React"] },
+        { id:2,  time:"11m ago",  title:"Doubles Secrets for Web Design",          desc:"My doubles does sell out every morning by 7am on the Churchill Roosevelt. I will teach you the bara and channa from scratch. Just fix my website nah.", img:"https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=600", tags:["Cooking","Web"], tt:true, user:"doubles_king_tt", avatar:"https://i.pravatar.cc/150?u=doublestt1", location:"Arima, Trinidad" },
+        { id:3,  time:"45m ago",  title:"Yoga Sessions for Guitar Lessons",        desc:"Certified yoga instructor (8 yrs). Offering weekly sessions in exchange for beginner to intermediate guitar lessons. Acoustic preferred.", img:"https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600", tags:["Yoga","Music"] },
+        { id:4,  time:"1h ago",   title:"Steelpan Lessons for Graphic Design",     desc:"I playing pan since I was 8 in Desperadoes. I go teach you soprano or tenor pan properly, not YouTube tutorials. Need someone to design flyers for my pan school.", img:"https://images.unsplash.com/photo-1519892300165-cb5542fb47c7?w=600", tags:["Music","Design"], tt:true, user:"pan_man_laventille", avatar:"https://i.pravatar.cc/150?u=pantt2", location:"Laventille, Trinidad" },
+        { id:5,  time:"2h ago",   title:"Video Editing for Bookkeeping Help",      desc:"5 years doing edits for local content creators. Premiere Pro and DaVinci. I'm terrible with receipts and taxes. Can anyone help?", img:"https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=600", tags:["Video","Finance"] },
+        { id:6,  time:"3h ago",   title:"Carnival Costume Design for Photography", desc:"I does work with a mas band in Woodbrook every year. I could teach you beading, feather work, all of that. Looking for a photographer for the band launch.", img:"https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=600", tags:["Design","Photography"], tt:true, user:"mas_queen_wdbrk", avatar:"https://i.pravatar.cc/150?u=mastt3", location:"Woodbrook, Trinidad" },
+        { id:7,  time:"5h ago",   title:"3D Modelling for Voice Coaching",         desc:"Blender artist doing characters, environments and product renders. Looking for someone to help me with public speaking. Big presentation coming up.", img:"https://images.unsplash.com/photo-1563207153-f403bf289163?w=600", tags:["3D Art","Public Speaking"] },
+        { id:8,  time:"7h ago",   title:"Fitness Coaching for Music Production",   desc:"NASM certified PT. I'll build you a custom 12-week plan. I want to make beats but have no idea where to start. FL Studio, Ableton, anything.", img:"https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600", tags:["Fitness","Music"] },
+        { id:9,  time:"1d ago",   title:"Python Tutoring for Spanish Lessons",     desc:"BSc Computer Science grad. I can get you from zero to building scripts in 4 weeks. Need a Spanish tutor, going to Colombia in March.", img:"https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=600", tags:["Python","Language"] },
+        { id:10, time:"2d ago",   title:"Car Mechanic for a Business Website",     desc:"25 years under the hood. Will do a full service plus minor repairs in exchange for a clean small business website. Serious offers only.", img:"https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=600", tags:["Automotive","Web"] }
     ];
+
+    const memberTradeData = [
+        { id:11, time:"just now", title:"Roti and Curry Cooking for Excel Help",       desc:"Trini-Indian home cook here. Dhal puri, buss up shut, curry chicken, aloo. I go teach you everything. My Excel at work is embarrassing me bad. Anybody could help?", img:"https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600", tags:["Cooking","Finance"], tt:true, user:"roti_aunty_chag", avatar:"https://i.pravatar.cc/150?u=rotitt4", location:"Chaguanas, Trinidad" },
+        { id:12, time:"6m ago",   title:"Cybersecurity Basics for a Logo",             desc:"I do ethical hacking and can walk you through securing your network, password managers, 2FA setup. Just need a logo for my consulting side project.", img:"https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600", tags:["Python","Design"] },
+        { id:13, time:"14m ago",  title:"Soca Music Production for Social Media Help", desc:"I produce soca and chutney soca out of my home studio in San Fernando. I go teach you FL Studio, sampling, the whole vibe. Need someone to run my Instagram properly.", img:"https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=600", tags:["Music","Design"], tt:true, user:"soca_producer_sf", avatar:"https://i.pravatar.cc/150?u=socatt5", location:"San Fernando, Trinidad" },
+        { id:14, time:"28m ago",  title:"Portrait Photography for Mandarin Lessons",   desc:"I shoot portraits and headshots professionally. Looking to learn conversational Mandarin. Doesn't need to be perfect, just enough to travel.", img:"https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=600", tags:["Photography","Language"] },
+        { id:15, time:"41m ago",  title:"T&T Liming Blog for Web Dev Help",            desc:"I blog about the best limes, restaurants and beach spots across T&T. My site is on Wix and I hate it. Looking for a developer to move me somewhere proper.", img:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600", tags:["Web","Design"], tt:true, user:"lime_blogger_tt", avatar:"https://i.pravatar.cc/150?u=limett6", location:"Maracas Bay, Trinidad" },
+        { id:16, time:"1h ago",   title:"Skateboarding Coaching for Illustration",     desc:"Been skating 12 years, I can coach any level. Looking for someone who can help illustrate a graphic novel I've been writing for two years.", img:"https://images.unsplash.com/photo-1547447134-cd3f5c716030?w=600", tags:["Fitness","Design"] },
+        { id:17, time:"2h ago",   title:"Parang Music for Video Editing",              desc:"Our family plays parang every Christmas season. I does play cuatro and sing. Want to start recording properly and put content on YouTube but don't know how to edit.", img:"https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=600", tags:["Music","Video"], tt:true, user:"parang_family_tt", avatar:"https://i.pravatar.cc/150?u=parangtt7", location:"Lopinot, Trinidad" },
+        { id:18, time:"3h ago",   title:"Graphic Design for Legal Advice",             desc:"Brand identity, logos, packaging. I've done it all. Does anyone know a paralegal or law student? Need help reviewing a freelance contract.", img:"https://images.unsplash.com/photo-1497366216548-37526070297c?w=600", tags:["Design","Legal"] }
+    ];
+
+    const generatedTitles = [
+        { title:"Home Cooking Lessons for SEO Help",       desc:"I've been cooking Caribbean food my whole life. Pelau, stew chicken, macaroni pie. I need someone to help me rank my catering page on Google.", tags:["Cooking","Web"],    img:"https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600" },
+        { title:"Piano Lessons for Photography Tips",       desc:"10 years of classical training. I can take you from nothing to reading music in 6 weeks. In exchange I want to learn how to take better photos for my recital flyers.", tags:["Music","Photography"], img:"https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?w=600" },
+        { title:"Language Tutoring for Fitness Coaching",   desc:"Fluent in French and Portuguese. I can help with conversation practice or exam prep. Looking for a personal trainer to help me get back in shape.", tags:["Language","Fitness"], img:"https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600" },
+        { title:"Website Redesign for Cooking Classes",     desc:"Full stack developer with 4 years experience. I'll rebuild your site for free in exchange for a few private cooking lessons. Any cuisine.", tags:["Web","Cooking"],   img:"https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600" },
+        { title:"Watercolour Painting for Legal Advice",    desc:"I teach watercolour classes every Saturday. Happy to take on a new student in exchange for someone helping me understand my rental agreement.", tags:["Design","Legal"],   img:"https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=600" },
+        { title:"DJ Mixing Lessons for Python Help",        desc:"DJing parties and weddings for 6 years. I can show you how to mix properly from scratch. Looking for someone to help me automate my booking spreadsheet.", tags:["Music","Python"],   img:"https://images.unsplash.com/photo-1571266028243-e4733b0f0bb0?w=600" },
+        { title:"Boxing Training for Video Production",     desc:"Amateur boxing coach. I'll train you twice a week and get you fight-ready. I need someone to shoot and edit highlight videos for my gym.", tags:["Fitness","Video"],  img:"https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=600" },
+        { title:"Interior Design Tips for Driving Lessons", desc:"Interior designer with a passion for Caribbean aesthetic. I'll give you a free consultation on your space. Just need someone patient to help me learn to drive.", tags:["Design","Automotive"], img:"https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600" },
+        { title:"Cake Decorating for Website Help",         desc:"I make custom cakes for every occasion. Fondant, buttercream, 3D sculpting. I just need a simple one-page site so people can find me online.", tags:["Cooking","Web"],    img:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600" },
+        { title:"Drone Photography for Fitness Plan",       desc:"I own two drones and shoot aerial footage for real estate and events. Looking for a proper gym programme. Happy to trade footage for a training plan.", tags:["Photography","Fitness"], img:"https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=600" },
+        { title:"Podcast Production for Yoga Classes",      desc:"I record and produce podcasts for small creators. I'll handle recording, editing and publishing. Just need stress relief — preferably yoga.", tags:["Video","Yoga"],     img:"https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=600" },
+        { title:"Spanish Lessons for 3D Art Tips",          desc:"Native Spanish speaker, born in Venezuela. I tutor all levels. Looking for a Blender artist to help me make a 3D version of my home country's landscape.", tags:["Language","3D Art"], img:"https://images.unsplash.com/photo-1546521343-4eb2c01aa44b?w=600" }
+    ];
+
+    let generatedIdCounter = 100;
+
+    async function loadCommunity() {
+        showSkeletons();
+        const intlPublic = publicTradeData.filter(t => !t.tt);
+        const intlMember = memberTradeData.filter(t => !t.tt);
+        const total = intlPublic.length + intlMember.length;
+        try {
+            const res = await fetch("https://randomuser.me/api/?results=" + total + "&seed=skillswap2026&nat=us,gb,ca,au,nz");
+            const data = await res.json();
+            let idx = 0;
+            allTrades = publicTradeData.map(t => {
+                if (t.tt) return Object.assign({}, t);
+                const u = data.results[idx++];
+                return Object.assign({}, t, { user: u.login.username, avatar: u.picture.thumbnail, location: u.location.city + ", " + u.location.country });
+            });
+            memberTrades = memberTradeData.map(t => {
+                if (t.tt) return Object.assign({}, t);
+                const u = data.results[idx++];
+                return Object.assign({}, t, { user: u.login.username, avatar: u.picture.thumbnail, location: u.location.city + ", " + u.location.country });
+            });
+        } catch(e) {
+            const fb = ["sarah_d","chef_m","yoga_j","dev_s","clip_k","arte3d","fitpro","grafix","mechk","cybrk","photoj","skater"];
+            let fi = 0;
+            allTrades = publicTradeData.map(t => t.tt ? Object.assign({},t) : Object.assign({},t,{user:fb[fi++]||"user"+t.id,avatar:"https://i.pravatar.cc/150?u=sw"+t.id,location:"London, UK"}));
+            memberTrades = memberTradeData.map(t => t.tt ? Object.assign({},t) : Object.assign({},t,{user:fb[fi++]||"user"+t.id,avatar:"https://i.pravatar.cc/150?u=swm"+t.id,location:"Toronto, CA"}));
+        }
+        allTrades.concat(memberTrades).forEach(t => { likes[t.id] = Math.floor(Math.random()*40)+2; comments[t.id] = []; });
+        renderFeed();
+        loadAdvice();
+        document.getElementById("scrollArea").addEventListener("scroll", handleScroll);
+    }
+
+    async function loadAdvice() {
+        try {
+            const res = await fetch("https://api.adviceslip.com/advice", { cache: "no-store" });
+            const data = await res.json();
+            window._currentAdvice = data.slip.advice;
+        } catch { window._currentAdvice = "Skills shared are skills doubled."; }
+    }
+
+    function getAdviceCard() {
+        const text = window._currentAdvice || "Every skill you share comes back to you tenfold.";
+        return "<div class=\"advice-card\"><h4>&#x1F4A1; Tip of the Day</h4><p>\"" + text + "\"</p><button onclick=\"refreshAdvice()\">New Tip &#8635;</button></div>";
+    }
+
+    async function refreshAdvice() {
+        await loadAdvice();
+        const card = document.querySelector(".advice-card p");
+        if (card) card.textContent = "\"" + window._currentAdvice + "\"";
+    }
+
+    function showSkeletons() {
+        let h = "";
+        for (let i = 0; i < 3; i++) h += "<div class=\"skeleton-card\"><div class=\"skel-header\"><div class=\"skel-avatar\"></div><div class=\"skel skel-line\" style=\"width:40%\"></div></div><div class=\"skel-image\"></div><div class=\"skel-body\"><div class=\"skel skel-line\" style=\"width:70%\"></div><div class=\"skel skel-line\" style=\"width:90%\"></div><div class=\"skel skel-line\" style=\"width:55%\"></div></div></div>";
+        document.getElementById("feed-container").innerHTML = h;
+    }
+
+    function buildCard(t) {
+        const bm = bookmarks.has(t.id), il = likedByMe.has(t.id), lc = likes[t.id] || 0;
+        const commentCount = (comments[t.id] || []).length;
+        const ttb = t.tt ? "<span style=\"background:#e8f5e9;color:#2e7d32;border-radius:12px;padding:2px 8px;font-size:.7rem;font-weight:700;\">&#x1F1F9;&#x1F1F9; T&T</span>" : "";
+        const tgs = (t.tags || []).map(g => "<span style=\"background:#e0f2fe;color:#0077b6;border-radius:12px;padding:2px 8px;font-size:.7rem;font-weight:700;\">" + g + "</span>").join("");
+        return "<div class=\"trade-card\" id=\"card-" + t.id + "\">" +
+            "<div class=\"card-header\">" +
+                "<img src=\"" + t.avatar + "\" class=\"avatar\" onerror=\"this.src='https://i.pravatar.cc/150?u=" + t.id + "'\"><div>" +
+                "<span style=\"font-weight:700;font-size:.9rem;\">" + t.user + "</span>" +
+                "<span style=\"font-size:.75rem;color:#888;display:block;\">" + t.location + " &middot; " + t.time + "</span></div>" +
+                "<div style=\"margin-left:auto;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;\">" + ttb + tgs + "</div>" +
+            "</div>" +
+            "<img src=\"" + t.img + "\" class=\"card-image\" onerror=\"this.style.display='none'\">" +
+            "<div class=\"card-body\">" +
+                "<h4 style=\"margin:0 0 8px;\">" + t.title + "</h4>" +
+                "<p style=\"margin:0 0 15px;color:#555;font-size:.9rem;line-height:1.5;\">" + t.desc + "</p>" +
+                "<div class=\"btn-group\">" +
+                    "<button class=\"action-btn msg-btn\" onclick=\"handleAccept('" + t.user + "')\">&#x2705; Accept</button>" +
+                    "<button class=\"action-btn quiz-btn\" onclick=\"openQuiz(" + t.id + ")\">&#x1F393; Study</button>" +
+                    "<button class=\"action-btn bookmark-button " + (bm ? "active" : "") + "\" id=\"bm-" + t.id + "\" onclick=\"toggleBookmark(" + t.id + ")\">" + (bm ? "&#x1F31F; Saved" : "&#x2B50; Bookmark") + "</button>" +
+                "</div>" +
+            "</div>" +
+            "<div class=\"engage-row\">" +
+                "<button class=\"like-btn " + (il ? "liked" : "") + "\" id=\"like-btn-" + t.id + "\" onclick=\"toggleLike(" + t.id + ")\">" + (il ? "&#x2764;&#xFE0F;" : "&#x1F90D;") + " " + lc + "</button>" +
+                "<button class=\"comment-toggle-btn\" onclick=\"toggleComments(" + t.id + ")\">&#x1F4AC; " + commentCount + " comment" + (commentCount !== 1 ? "s" : "") + "</button>" +
+            "</div>" +
+            "<div class=\"comment-section hidden\" id=\"comments-" + t.id + "\">" +
+                "<div class=\"comment-list\" id=\"comment-list-" + t.id + "\">" + renderComments(t.id) + "</div>" +
+                "<div class=\"comment-input-row\">" +
+                    "<input type=\"text\" id=\"comment-input-" + t.id + "\" placeholder=\"" + (currentUser ? "Add a comment..." : "Login to comment") + "\">" +
+                    "<button onclick=\"postComment(" + t.id + ")\">Post</button>" +
+                "</div>" +
+            "</div>" +
+        "</div>";
+    }
+
+    function renderFeed(showBm, search) {
+        showBm = showBm || false;
+        search = (search || "").toLowerCase();
+        const container = document.getElementById("feed-container");
+        let pubList = showBm ? allTrades.filter(t => bookmarks.has(t.id)) : allTrades.slice();
+        let memList = currentUser && !showBm ? memberTrades.slice() : (showBm ? memberTrades.filter(t => bookmarks.has(t.id)) : []);
+        let genList = currentUser && !showBm ? generatedTrades.slice() : [];
+        if (search) {
+            const f = t => t.title.toLowerCase().includes(search) || (t.tags||[]).some(g => g.toLowerCase().includes(search));
+            pubList = pubList.filter(f); memList = memList.filter(f); genList = genList.filter(f);
+        }
+        document.getElementById("feedTitle").innerText = showBm ? "Your Bookmarks" : "Community Feed";
+        document.getElementById("backToFeed").style.display = showBm ? "block" : "none";
+        if (!pubList.length && !memList.length && !genList.length) { container.innerHTML = "<p style=\"text-align:center;color:#888;margin-top:40px;\">No trades found.</p>"; return; }
+        let html = "";
+        pubList.forEach((t, i) => { if (i === 5 && !showBm) html += getAdviceCard(); html += buildCard(t); });
+        if (!currentUser && !showBm) {
+            html += "<div class=\"login-gate\"><h3>&#x1F512; Join the Community</h3><p>Sign in to see more skill swap listings from members around the world.</p><button onclick=\"openAuth()\">Login / Sign Up</button></div>";
+        }
+        if (memList.length) {
+            html += "<div class=\"members-divider\"><div></div><span>&#x2726; MEMBERS FEED</span><div></div></div>";
+            memList.forEach(t => { html += buildCard(t); });
+        }
+        if (genList.length) {
+            genList.forEach(t => { html += buildCard(t); });
+        }
+        container.innerHTML = html;
+    }
+
+    function filterFeed(val) { renderFeed(false, val); }
+
+    async function loadMoreTrades() {
+        if (isLoadingMore || !currentUser) return;
+        isLoadingMore = true;
+        document.getElementById("loadSpinner").style.display = "block";
+        autoLoadSeed += 10;
+        try {
+            const res = await fetch("https://randomuser.me/api/?results=5&seed=skillswap" + autoLoadSeed + "&nat=us,gb,ca,au,nz,in");
+            const data = await res.json();
+            const templates = generatedTitles;
+            data.results.forEach((u, i) => {
+                generatedIdCounter++;
+                const tpl = templates[(generatedIdCounter + i) % templates.length];
+                const newTrade = {
+                    id: generatedIdCounter,
+                    time: (Math.floor(Math.random()*59)+1) + "m ago",
+                    title: tpl.title,
+                    desc: tpl.desc,
+                    img: tpl.img,
+                    tags: tpl.tags,
+                    user: u.login.username,
+                    avatar: u.picture.thumbnail,
+                    location: u.location.city + ", " + u.location.country,
+                    tt: false
+                };
+                likes[newTrade.id] = Math.floor(Math.random()*30)+1;
+                comments[newTrade.id] = [];
+                generatedTrades.push(newTrade);
+                const container = document.getElementById("feed-container");
+                const div = document.createElement("div");
+                div.innerHTML = buildCard(newTrade);
+                container.appendChild(div.firstChild);
+            });
+        } catch(e) {
+            for (let i = 0; i < 3; i++) {
+                generatedIdCounter++;
+                const tpl = generatedTitles[generatedIdCounter % generatedTitles.length];
+                const newTrade = {
+                    id: generatedIdCounter,
+                    time: (Math.floor(Math.random()*59)+1) + "m ago",
+                    title: tpl.title, desc: tpl.desc, img: tpl.img, tags: tpl.tags,
+                    user: "user" + generatedIdCounter,
+                    avatar: "https://i.pravatar.cc/150?u=gen" + generatedIdCounter,
+                    location: "Port of Spain, Trinidad", tt: false
+                };
+                likes[newTrade.id] = Math.floor(Math.random()*30)+1;
+                comments[newTrade.id] = [];
+                generatedTrades.push(newTrade);
+                const container = document.getElementById("feed-container");
+                const div = document.createElement("div");
+                div.innerHTML = buildCard(newTrade);
+                container.appendChild(div.firstChild);
+            }
+        }
+        document.getElementById("loadSpinner").style.display = "none";
+        isLoadingMore = false;
+    }
+
+    function handleScroll() {
+        if (!currentUser) return;
+        const el = document.getElementById("scrollArea");
+        if (el.scrollTop + el.clientHeight >= el.scrollHeight - 200) {
+            loadMoreTrades();
+        }
+    }
+
+    function renderComments(id) {
+        const list = comments[id] || [];
+        if (!list.length) return "<p style=\"font-size:.8rem;color:#bbb;padding:6px 0;\">No comments yet. Be the first!</p>";
+        return list.map(c => "<div class=\"comment-item\"><strong>" + c.user + "</strong>  " + c.text + "</div>").join("");
+    }
+
+    function toggleComments(id) { document.getElementById("comments-" + id).classList.toggle("hidden"); }
+
+    function toggleLike(id) {
+        if (!currentUser) { openAuth(); return; }
+        if (likedByMe.has(id)) { likedByMe.delete(id); likes[id] = Math.max(0,(likes[id]||1)-1); }
+        else { likedByMe.add(id); likes[id] = (likes[id]||0)+1; }
+        const btn = document.getElementById("like-btn-" + id);
+        if (btn) { const il = likedByMe.has(id); btn.className = "like-btn" + (il?" liked":""); btn.innerHTML = (il?"&#x2764;&#xFE0F;":"&#x1F90D;") + " " + likes[id]; }
+    }
+
+    function postComment(id) {
+        if (!currentUser) { openAuth(); return; }
+        const input = document.getElementById("comment-input-" + id);
+        const text = input.value.trim();
+        if (!text) return;
+        comments[id].push({ user: currentUser.name, text });
+        input.value = "";
+        document.getElementById("comment-list-" + id).innerHTML = renderComments(id);
+        const btn = document.querySelector("#card-" + id + " .comment-toggle-btn");
+        if (btn) { const c = comments[id].length; btn.innerHTML = "&#x1F4AC; " + c + " comment" + (c!==1?"s":""); }
+    }
+
+    function handleAccept(u) { if (!currentUser) { openAuth(); return; } toggleMenu("right-messages"); loadMessages(u); }
+
+    function loadMessages(highlight) {
+        if (!currentUser) { document.getElementById("msgContent").innerHTML = "<p>Please login to view your messages.</p>"; return; }
+        const threads = [
+            { user:"doubles_king_tt", preview:"Aye! You serious about learning doubles? Come Arima this weekend." },
+            { user:"pan_man_laventille", preview:"I have space on Saturdays. You have your own sticks?" },
+            { user:"soca_producer_sf", preview:"Drop your Instagram handle and I go check your page." }
+        ];
+        if (highlight && !threads.find(t => t.user===highlight)) threads.unshift({ user:highlight, preview:"New conversation started..." });
+        document.getElementById("msgContent").innerHTML = threads.map(t =>
+            "<div class=\"msg-thread\">" + (highlight===t.user?"<span class=\"msg-unread\"></span>":"") + "<strong>" + t.user + "</strong><p>" + t.preview + "</p></div>"
+        ).join("") + "<p style=\"text-align:center;font-size:.8rem;color:#bbb;margin-top:20px;\">Full messaging coming soon</p>";
+    }
 
     function toggleAuthMode() {
         isLoginMode = !isLoginMode;
-        document.getElementById('authTitle').innerText = isLoginMode ? "Sign In" : "Create Account";
-        document.getElementById('authSubmit').innerText = isLoginMode ? "Login" : "Register";
-        document.getElementById('authToggle').innerText = isLoginMode ? "Don't have an account? Sign Up" : "Already have an account? Login";
+        document.getElementById("authTitle").innerText = isLoginMode ? "Sign In" : "Create Account";
+        document.getElementById("authSubmit").innerText = isLoginMode ? "Login" : "Register";
+        document.getElementById("authToggle").innerText = isLoginMode ? "Don't have an account? Sign Up" : "Already have an account? Login";
+        document.getElementById("authError").style.display = "none";
     }
 
     function handleAuth() {
-        const u = document.getElementById('userInput').value;
-        if (!u) { alert("Please enter a username"); return; }
-        currentUser = { name: u };
-        document.getElementById('headerAuthBtn').innerText = `Hi, ${u}`;
-        document.getElementById('menuTitle').innerText = `Welcome, ${u}!`;
-        document.getElementById('logoutLink').style.display = "block";
-        closeAuth();
-        renderFeed();
+        const u = document.getElementById("userInput").value.trim();
+        const p = document.getElementById("passInput").value;
+        const err = document.getElementById("authError");
+        err.style.display = "none";
+        if (!u || !p) { err.innerText = "Please fill in all fields."; err.style.display = "block"; return; }
+        if (isLoginMode) {
+            if (registeredUsers[u] === p || (u === "bob@mail.com" && p === "bobpass")) { loginSuccess(u === "bob@mail.com" ? "bob" : u); }
+            else { err.innerText = "Invalid username or password."; err.style.display = "block"; }
+        } else {
+            if (registeredUsers[u]) { err.innerText = "Username already taken."; err.style.display = "block"; return; }
+            registeredUsers[u] = p; loginSuccess(u);
+        }
     }
 
-    function openAuth() { document.getElementById('auth-overlay').classList.add('active'); }
-    function closeAuth() { document.getElementById('auth-overlay').classList.remove('active'); }
-
-    function toggleMenu(id) {
-        closeMenus();
-        document.getElementById(id).classList.add('active');
-        document.getElementById('main-overlay').classList.add('active');
-    }
-
-    function closeMenus() {
-        document.querySelectorAll('.sidebar').forEach(m => m.classList.remove('active'));
-        document.getElementById('main-overlay').classList.remove('active');
+    function loginSuccess(username) {
+        currentUser = { name: username };
+        document.getElementById("headerAuthBtn").innerText = "Hi, " + username;
+        document.getElementById("menuTitle").innerText = "Welcome, " + username + "!";
+        document.getElementById("logoutLink").style.display = "block";
+        closeAuth(); renderFeed();
     }
 
     function viewBookmarks() {
         if (!currentUser) { openAuth(); return; }
         closeMenus();
-        if (bookmarks.size === 0) { alert("No bookmarks yet!"); return; }
+        const all = allTrades.concat(memberTrades).concat(generatedTrades);
+        if (!all.some(t => bookmarks.has(t.id))) { alert("No bookmarks yet! Save some trades first."); return; }
         renderFeed(true);
     }
 
     function toggleBookmark(id) {
         if (!currentUser) { openAuth(); return; }
         bookmarks.has(id) ? bookmarks.delete(id) : bookmarks.add(id);
-        document.getElementById('bookmarkCount').innerText = bookmarks.size;
-        renderFeed();
-    }
-
-    function renderFeed(showOnlyBookmarks = false) {
-        const container = document.getElementById('feed-container');
-        const list = showOnlyBookmarks ? trades.filter(t => bookmarks.has(t.id)) : trades;
-        document.getElementById('feedTitle').innerText = showOnlyBookmarks ? "Your Bookmarks" : "Community Feed";
-        document.getElementById('backToFeed').style.display = showOnlyBookmarks ? "block" : "none";
-
-        container.innerHTML = list.map(t => {
-            const isBookmarked = bookmarks.has(t.id);
-            return `
-                <div class="trade-card">
-                    <div class="card-header"><img src="${t.avatar}" class="avatar"> <span class="username">${t.user}</span></div>
-                    <img src="${t.img}" class="card-image">
-                    <div class="card-body">
-                        <h4>${t.title}</h4><p>${t.desc}</p>
-                        <div class="btn-group">
-                            <button class="action-btn msg-btn">Accept</button>
-                            <button class="action-btn quiz-btn">🎓 Study</button>
-                            <button class="action-btn bookmark-button ${isBookmarked ? 'active' : ''}" onclick="toggleBookmark(${t.id})">
-                                ${isBookmarked ? '🌟 Saved' : '⭐ Bookmark'}
-                            </button>
-                        </div>
-                    </div>
-                </div>`;
-        }).join('');
+        document.getElementById("bookmarkCount").innerText = bookmarks.size;
+        const btn = document.getElementById("bm-" + id);
+        if (btn) { const a = bookmarks.has(id); btn.className = "action-btn bookmark-button" + (a?" active":""); btn.innerHTML = a ? "&#x1F31F; Saved" : "&#x2B50; Bookmark"; }
     }
 
     function processLogout() {
-        currentUser = null;
-        bookmarks.clear();
-        document.getElementById('headerAuthBtn').innerText = "Login / Sign Up";
-        document.getElementById('logoutLink').style.display = "none";
-        document.getElementById('bookmarkCount').innerText = "0";
-        renderFeed();
-        closeMenus();
+        currentUser = null; bookmarks.clear(); likedByMe.clear(); generatedTrades = [];
+        document.getElementById("headerAuthBtn").innerText = "Login / Sign Up";
+        document.getElementById("logoutLink").style.display = "none";
+        document.getElementById("bookmarkCount").innerText = "0";
+        renderFeed(); closeMenus();
     }
 
-    renderFeed();
+    function openAuth() { document.getElementById("auth-overlay").classList.add("active"); }
+    function closeAuth() { document.getElementById("auth-overlay").classList.remove("active"); document.getElementById("authError").style.display = "none"; }
+    function toggleMenu(id) { closeMenus(); document.getElementById(id).classList.add("active"); document.getElementById("main-overlay").classList.add("active"); }
+    function closeMenus() { document.querySelectorAll(".sidebar").forEach(m => m.classList.remove("active")); document.getElementById("main-overlay").classList.remove("active"); }
+
+    const TOPIC_MAP = {
+        "Design":{"cat":25,"label":"Art & Design","fallback":[{"question":"What does UI stand for?","correct":"User Interface","options":["User Interface","Universal Input","Unified Integration","User Interaction"]},{"question":"Which colour model is used for screens?","correct":"RGB","options":["RGB","CMYK","HSL","PMS"]},{"question":"What is kerning?","correct":"Adjusting space between letters","options":["Adjusting space between letters","Changing font weight","Setting line height","Picking a typeface"]},{"question":"What does a wireframe show?","correct":"Layout structure without visual design","options":["Layout structure without visual design","Final colour palette","Finished mockup","Animation timing"]},{"question":"Figma is primarily used for?","correct":"UI/UX Design","options":["UI/UX Design","3D Modelling","Video Editing","Database Management"]}]},
+        "Cooking":{"cat":9,"label":"Cooking","fallback":[{"question":"What gas is produced during bread fermentation?","correct":"Carbon Dioxide","options":["Carbon Dioxide","Oxygen","Nitrogen","Hydrogen"]},{"question":"Al dente pasta is?","correct":"Firm to the bite","options":["Firm to the bite","Completely soft","Crispy","Uncooked in the centre"]},{"question":"Base herb of pesto?","correct":"Basil","options":["Basil","Parsley","Oregano","Thyme"]},{"question":"What is the Maillard reaction?","correct":"Browning of food when heated","options":["Browning of food when heated","Boiling point reduction","Protein denaturation","Water evaporation"]},{"question":"Sauteing means?","correct":"Cooking in a small amount of fat over high heat","options":["Cooking in a small amount of fat over high heat","Boiling water","Baking in an oven","Steaming"]}]},
+        "Yoga":{"cat":21,"label":"Yoga","fallback":[{"question":"What does Asana mean?","correct":"Posture or seat","options":["Posture or seat","Breathing","Meditation","Harmony"]},{"question":"Breath-movement sync yoga style?","correct":"Vinyasa","options":["Vinyasa","Yin","Restorative","Bikram"]},{"question":"Savasana is performed at the?","correct":"End of a yoga session","options":["End of a yoga session","Start","Middle","During pranayama"]},{"question":"Pranayama refers to control of?","correct":"Breath","options":["Breath","Posture","Diet","Focus"]},{"question":"Heart chakra?","correct":"Anahata","options":["Anahata","Manipura","Vishuddha","Muladhara"]}]},
+        "Music":{"cat":12,"label":"Music","fallback":[{"question":"Standard guitar strings?","correct":"6","options":["6","4","5","7"]},{"question":"4/4 means?","correct":"4 beats per measure","options":["4 beats per measure","4 measures per song","4 bars per phrase","4 notes per chord"]},{"question":"Play softly?","correct":"Piano","options":["Piano","Forte","Allegro","Staccato"]},{"question":"BPM stands for?","correct":"Beats Per Minute","options":["Beats Per Minute","Bass Per Measure","Bars Per Mix","Beat Position Marker"]},{"question":"An octave spans?","correct":"8 notes","options":["8 notes","7 notes","12 notes","6 notes"]}]},
+        "Video":{"cat":25,"label":"Video","fallback":[{"question":"FPS stands for?","correct":"Frames Per Second","options":["Frames Per Second","Focus Point Setting","Frame Pixel Size","Fast Processing Speed"]},{"question":"Rule of thirds is a principle of?","correct":"Composition","options":["Composition","Lighting","Colour grading","Audio mixing"]},{"question":"ISO controls?","correct":"Sensor sensitivity to light","options":["Sensor sensitivity to light","Shutter speed","Aperture size","White balance"]},{"question":"B-roll is used to?","correct":"Supplement the main footage","options":["Supplement the main footage","Record the main interview","Capture audio","Set white balance"]},{"question":"4K refers to?","correct":"Approx 4000 pixels horizontal resolution","options":["Approx 4000 pixels horizontal resolution","4 kilobytes","4 frames per second","4000 colour channels"]}]},
+        "Photography":{"cat":25,"label":"Photography","fallback":[]},
+        "Python":{"cat":18,"label":"Python","fallback":[{"question":"Define a function in Python?","correct":"def","options":["def","func","function","define"]},{"question":"5/2 in Python 3?","correct":"float","options":["float","int","double","string"]},{"question":"len() returns?","correct":"The number of items in an object","options":["The number of items in an object","The last element","Memory size","Data type"]},{"question":"Python list?","correct":"[1, 2, 3]","options":["[1, 2, 3]","{1, 2, 3}","(1, 2, 3)","<1, 2, 3>"]},{"question":"pip does what?","correct":"Installs packages","options":["Installs packages","Runs scripts","Debugs code","Compiles Python"]}]},
+        "Language":{"cat":22,"label":"Language","fallback":[{"question":"Thank you in Spanish?","correct":"Gracias","options":["Gracias","Merci","Danke","Grazie"]},{"question":"Most native speakers?","correct":"Mandarin Chinese","options":["Mandarin Chinese","English","Spanish","Hindi"]},{"question":"Buenos dias means?","correct":"Good morning","options":["Good morning","Good night","Good evening","Goodbye"]},{"question":"What is a cognate?","correct":"A word similar in two languages","options":["A word similar in two languages","A grammar rule","A verb conjugation","A language family"]},{"question":"Subjunctive mood expresses?","correct":"Doubt, wishes, or emotion","options":["Doubt, wishes, or emotion","Completed past","Simple present","Future certainty"]}]},
+        "Finance":{"cat":9,"label":"Finance","fallback":[{"question":"ROI stands for?","correct":"Return on Investment","options":["Return on Investment","Rate of Interest","Record of Income","Revenue Over Income"]},{"question":"A balance sheet shows?","correct":"Assets, liabilities and equity","options":["Assets, liabilities and equity","Daily expenses","Profit forecast","Tax return"]},{"question":"P&L stands for?","correct":"Profit and Loss","options":["Profit and Loss","Payment and Liability","Price and Labour","Projected and Listed"]},{"question":"Depreciation refers to?","correct":"Reduction in asset value over time","options":["Reduction in asset value over time","Increase in debt","Rising inflation","Growth in equity"]},{"question":"A debit is?","correct":"An entry that increases an asset account","options":["An entry that increases an asset account","Money owed to a bank","A reduction in equity","A credit note"]}]},
+        "Fitness":{"cat":21,"label":"Fitness","fallback":[{"question":"HIIT stands for?","correct":"High Intensity Interval Training","options":["High Intensity Interval Training","High Impact Indoor Training","Heavy Interval Incline Training","Heart Intensive Interval Technique"]},{"question":"Muscle repair macronutrient?","correct":"Protein","options":["Protein","Carbohydrates","Fat","Fibre"]},{"question":"Rest between same muscle groups?","correct":"48 hours","options":["48 hours","12 hours","1 week","24 hours"]},{"question":"A rep is?","correct":"One complete movement of an exercise","options":["One complete movement of an exercise","A rest period","A training session","A warmup set"]},{"question":"VO2 max measures?","correct":"Maximum oxygen uptake during exercise","options":["Maximum oxygen uptake during exercise","Maximum heart rate","Resting metabolic rate","Blood pressure at peak effort"]}]},
+        "Automotive":{"cat":17,"label":"Automotive","fallback":[{"question":"RPM stands for?","correct":"Revolutions Per Minute","options":["Revolutions Per Minute","Rate Per Mile","Rotations Per Motor","Running Power Metric"]},{"question":"Braking system fluid?","correct":"Brake fluid","options":["Brake fluid","Engine oil","Coolant","Transmission fluid"]},{"question":"Catalytic converter reduces?","correct":"Harmful exhaust emissions","options":["Harmful exhaust emissions","Engine noise","Fuel consumption","Oil pressure"]},{"question":"OBD stands for?","correct":"On-Board Diagnostics","options":["On-Board Diagnostics","Overhead Belt Drive","Oil Based Detection","Output Buffer Display"]},{"question":"Torque refers to?","correct":"Rotational force produced by the engine","options":["Rotational force produced by the engine","Top speed rating","Fuel efficiency","Brake force"]}]},
+        "3D Art":{"cat":25,"label":"3D Art","fallback":[{"question":"What is a polygon?","correct":"A flat surface made of vertices and edges","options":["A flat surface made of vertices and edges","A curved line","A texture map","A lighting rig"]},{"question":"Blender is?","correct":"A free open-source 3D software","options":["A free open-source 3D software","A paid Autodesk product","A game engine","A video editor"]},{"question":"UV mapping does?","correct":"Apply textures to a 3D surface","options":["Apply textures to a 3D surface","Set up camera angles","Rig a character","Create animations"]},{"question":"To render means to?","correct":"Generate the final image from a 3D scene","options":["Generate the final image from a 3D scene","Import a model","Export a texture","Delete vertices"]},{"question":"A mesh is made of?","correct":"Vertices, edges and faces","options":["Vertices, edges and faces","Pixels and colours","Bones and joints","Shaders and lights"]}]},
+        "Public Speaking":{"cat":9,"label":"Public Speaking","fallback":[{"question":"Speech opening should?","correct":"Hook the audience immediately","options":["Hook the audience immediately","Apologise for being nervous","List all main points","Introduce yourself at length"]},{"question":"A rhetorical question is?","correct":"A question asked for effect, not an answer","options":["A question asked for effect, not an answer","A question with no answer","An open-ended survey question","A question in a debate"]},{"question":"Eye contact helps?","correct":"Build trust and engagement","options":["Build trust and engagement","Avoid losing your place","Seem confident","Slow your speech down"]},{"question":"Rule of three means?","correct":"Grouping ideas in threes for impact","options":["Grouping ideas in threes for impact","Speaking for 3 minutes","Using 3 slides","Having 3 speakers"]},{"question":"Filler words replaced with?","correct":"Deliberate pauses","options":["Deliberate pauses","Faster speech","More hand gestures","Louder volume"]}]},
+        "Web":{"cat":18,"label":"Web Development","fallback":[{"question":"HTML stands for?","correct":"HyperText Markup Language","options":["HyperText Markup Language","HyperTransfer Markup Language","HighText Machine Language","HyperTool Multi Language"]},{"question":"CSS controls?","correct":"Presentation and styling","options":["Presentation and styling","Page logic","Server requests","Database queries"]},{"question":"API stands for?","correct":"Application Programming Interface","options":["Application Programming Interface","Applied Program Index","Automated Process Integration","App Pixel Interface"]},{"question":"HTTP method to send data?","correct":"POST","options":["POST","GET","DELETE","FETCH"]},{"question":"Responsive design means?","correct":"Design that adapts to screen size","options":["Design that adapts to screen size","Design that loads fast","Design with animations","Design for print"]}]},
+        "Legal":{"cat":9,"label":"Legal Basics","fallback":[{"question":"Valid contract requires?","correct":"Offer, acceptance, and consideration","options":["Offer, acceptance, and consideration","Signatures only","Witnesses only","A lawyer present"]},{"question":"NDA stands for?","correct":"Non-Disclosure Agreement","options":["Non-Disclosure Agreement","National Development Act","Net Deductible Amount","New Dealer Agreement"]},{"question":"Intellectual property protects?","correct":"Creations of the mind","options":["Creations of the mind","Physical property","Bank accounts","Employment rights"]},{"question":"Copyright granted when?","correct":"A work is created and fixed in tangible form","options":["A work is created and fixed in tangible form","You register it","A lawyer approves it","You publish it"]},{"question":"Freelance contract includes?","correct":"Scope of work, payment terms, and deadlines","options":["Scope of work, payment terms, and deadlines","Only the payment amount","Just signatures","The client's legal history"]}]},
+        "React":{"cat":18,"label":"React","fallback":[]}
+    };
+
+    async function openQuiz(tradeId) {
+        lastQuizTradeId = tradeId;
+        const trade = allTrades.concat(memberTrades).concat(generatedTrades).find(t => t.id === tradeId);
+        if (!trade) return;
+        const tag = (trade.tags || ["Web"])[0];
+        const topic = TOPIC_MAP[tag] || TOPIC_MAP["Web"];
+        document.getElementById("quizTitle").innerText = "Study: " + trade.title;
+        document.getElementById("quiz-overlay").classList.add("active");
+        document.getElementById("quiz-body").innerHTML = "<p style=\"text-align:center;color:#888;\">Loading questions on " + topic.label + "...</p>";
+        quizIndex = 0; quizScore = 0;
+        try {
+            const res = await fetch("https://opentdb.com/api.php?amount=5&type=multiple&category=" + topic.cat);
+            const data = await res.json();
+            if (data.results && data.results.length > 0) {
+                quizQuestions = data.results.map(q => ({ question: decodeHTML(q.question), correct: decodeHTML(q.correct_answer), options: shuffle([q.correct_answer, ...q.incorrect_answers].map(decodeHTML)) }));
+            } else throw new Error("none");
+        } catch {
+            const fb = topic.fallback && topic.fallback.length > 0 ? topic.fallback : TOPIC_MAP["Web"].fallback;
+            quizQuestions = fb.map(q => ({ question: q.question, correct: q.correct, options: shuffle(q.options.slice()) }));
+        }
+        showQuizQuestion();
+    }
+
+    function showQuizQuestion() {
+        if (quizIndex >= quizQuestions.length) {
+            document.getElementById("quiz-body").innerHTML = "<div style=\"text-align:center;padding:20px;\"><div style=\"font-size:3rem;margin-bottom:10px;\">&#x1F389;</div><div class=\"quiz-score\">You scored " + quizScore + " / " + quizQuestions.length + "!</div><p style=\"color:#888;font-size:.9rem;\">Keep learning and keep swapping!</p><button class=\"next-btn\" style=\"display:block;margin:10px auto;\" onclick=\"openQuiz(lastQuizTradeId)\">Play Again</button><button class=\"next-btn\" style=\"display:block;margin:10px auto;background:#888;\" onclick=\"closeQuiz()\">Close</button></div>";
+            return;
+        }
+        const q = quizQuestions[quizIndex];
+        document.getElementById("quiz-body").innerHTML =
+            "<div class=\"quiz-progress\">Question " + (quizIndex+1) + " of " + quizQuestions.length + " &bull; Score: " + quizScore + "</div>" +
+            "<div class=\"quiz-q\">" + q.question + "</div>" +
+            "<div id=\"quiz-options\">" + q.options.map(o => "<button class=\"quiz-option\" onclick=\"answerQuiz(this,'" + escQ(o) + "','" + escQ(q.correct) + "')\">"+o+"</button>").join("") + "</div>" +
+            "<button class=\"next-btn\" id=\"nextBtn\" onclick=\"nextQuestion()\">Next &#8594;</button>";
+    }
+
+    function answerQuiz(btn, selected, correct) {
+        document.querySelectorAll(".quiz-option").forEach(b => b.disabled = true);
+        if (selected === correct) { btn.classList.add("correct"); quizScore++; }
+        else { btn.classList.add("wrong"); document.querySelectorAll(".quiz-option").forEach(b => { if (b.textContent.trim() === correct) b.classList.add("correct"); }); }
+        document.getElementById("nextBtn").style.display = "block";
+    }
+
+    function nextQuestion() { quizIndex++; showQuizQuestion(); }
+    function closeQuiz() { document.getElementById("quiz-overlay").classList.remove("active"); }
+    function shuffle(arr) { return arr.sort(() => Math.random() - 0.5); }
+    function decodeHTML(str) { const t = document.createElement("textarea"); t.innerHTML = str; return t.value; }
+    function escQ(str) { return str.replace(/'/g, "\\'").replace(/"/g, "&quot;"); }
+
+    loadCommunity();
 </script>
 </body>
 </html>
